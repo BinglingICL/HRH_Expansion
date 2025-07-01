@@ -76,13 +76,13 @@ def predict_with_ci(input=p, budget_growth_rate=0.042, setting='main'):
 # calculate the outcomes
 if setting == 'Main analysis':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='main')
-elif setting == 'Sensitivity analysis with more budget':
+elif setting == 'More budget':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.058, setting='more_budget')
-elif setting == 'Sensitivity analysis with less budget':
+elif setting == 'Less budget':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.026, setting='less_budget')
-elif setting == 'Sensitivity analysis with default consumable availability':
+elif setting == 'Default consumable availability':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='default_cons')
-elif setting == 'Sensitivity analysis with maximal health system function':
+elif setting == 'Maximal health system function':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='max_hs_func')
 
 # Check the predicting button and print outcomes
