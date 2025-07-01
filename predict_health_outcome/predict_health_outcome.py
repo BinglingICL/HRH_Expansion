@@ -49,100 +49,49 @@ def increase_rate(R=0.042, input=p):
 
 
 # Define functions to calculate the health outcome
-def main_analysis_with_ci(input=p):
+def predict_with_ci(input=p, budget_growth_rate=0.042, setting='main'):
     # transform the input strategy to increase rate
-    rate = increase_rate(R=0.042, input=input)
+    rate = increase_rate(R=budget_growth_rate, input=input)
     predictor = pd.DataFrame(
         data=[rate],
         columns=['Clinical', 'DCSA', 'Nursing_and_Midwifery', 'Pharmacy', 'Other']
     )
     predictor = sm.add_constant(predictor, has_constant='add')
     # get the regression model
-    with open('predict_health_outcome/reg_model_main.pkl', 'rb') as f:
+    file_path = f'predict_health_outcome/reg_model_{setting}.pkl'
+    with open(file_path, 'rb') as f:
         est = pickle.load(f)
     # get the prediction
     pred = est.get_prediction(predictor)
     pred_summary = pred.summary_frame(alpha=0.05)
     mean_dalys_in_million = pred_summary.loc[0, 'mean'].round(2)
-    ci = [pred_summary.loc[0, 'mean_ci_lower'].round(2), pred_summary.loc[0, 'mean_ci_upper'].round(2)]
-    pi = [pred_summary.loc[0, 'obs_ci_lower'].round(2), pred_summary.loc[0, 'obs_ci_upper'].round(2)]
+    ci_lower = pred_summary.loc[0, 'mean_ci_lower'].round(2)
+    ci_upper = pred_summary.loc[0, 'mean_ci_upper'].round(2)
+    pi_lower = pred_summary.loc[0, 'obs_ci_lower'].round(2)
+    pi_upper = pred_summary.loc[0, 'obs_ci_upper'].round(2)
 
-    return mean_dalys_in_million, ci, pi
-
-
-def main_analysis(input=p):
-    # the linear predicting model
-    const = 100.8007
-    coefs = [-0.9464, -0.3928, - 0.9712, -0.2536, -0.1851]
-    # get increase rates in percentage
-    rate = increase_rate(R=0.042, input=input)
-    # calculate the health outcome
-    dalys_incurred_in_million = sum([coefs[i] * rate[i] for i in range(5)]) + const
-    return dalys_incurred_in_million
-
-
-def more_budget(input=p):
-    # the linear predicting model
-    const = 100.4043
-    coefs = [-0.7492, -0.2993, -0.7124, -0.2190, -0.1472]
-    # get increase rates in percentage
-    rate = increase_rate(R=0.058, input=input)
-    # calculate the health outcome
-    dalys_incurred_in_million = sum([coefs[i] * rate[i] for i in range(5)]) + const
-    return dalys_incurred_in_million
-
-
-def less_budget(input=p):
-    # the linear predicting model
-    const = 102.3225
-    coefs = [-1.3148, -0.6650, -1.5711, -0.3221, -0.2774]
-    # get increase rates in percentage
-    rate = increase_rate(R=0.026, input=input)
-    # calculate the health outcome
-    dalys_incurred_in_million = sum([coefs[i] * rate[i] for i in range(5)]) + const
-    return dalys_incurred_in_million
-
-
-def default_cons(input=p):
-    # the linear predicting model
-    const = 118.1100
-    coefs = [-0.7652, -0.2997, -0.8217, -0.1759, -0.350]
-    # get increase rates in percentage
-    rate = increase_rate(R=0.042, input=input)
-    # calculate the health outcome
-    dalys_incurred_in_million = sum([coefs[i] * rate[i] for i in range(5)]) + const
-    return dalys_incurred_in_million
-
-
-def max_hs_func(input=p):
-    # the linear predicting model
-    const = 140.3744
-    coefs = [-1.4983, -0.4446, -2.0231, -0.220, -0.2145]
-    # get increase rates in percentage
-    rate = increase_rate(R=0.042, input=input)
-    # calculate the health outcome
-    dalys_incurred_in_million = sum([coefs[i] * rate[i] for i in range(5)]) + const
-    return dalys_incurred_in_million
+    return mean_dalys_in_million, ci_lower, ci_upper, pi_lower, pi_upper
 
 
 # calculate the outcomes
 if setting == 'Main analysis':
-    outcomes = main_analysis_with_ci(input=p)
+    outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='main')
 elif setting == 'Sensitivity analysis with more budget':
-    outcomes = more_budget(input=p)
+    outcomes = predict_with_ci(input=p, budget_growth_rate=0.058, setting='more_budget')
 elif setting == 'Sensitivity analysis with less budget':
-    outcomes = less_budget(input=p)
+    outcomes = predict_with_ci(input=p, budget_growth_rate=0.026, setting='less_budget')
 elif setting == 'Sensitivity analysis with default consumable availability':
-    outcomes = default_cons(input=p)
+    outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='default_cons')
 elif setting == 'Sensitivity analysis with maximal health system function':
-    outcomes = max_hs_func(input=p)
+    outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='max_hs_func')
 
 # Check the predicting button and print outcomes
 st.subheader("The predicted outcome", divider='green')
 if st.button('Predict the health outcome'):
     # print the health outcome
     st.success(f"The predicted DALYs is **{outcomes[0]}** million in the 10 year period of 2025-2034. "
-               f"The 95% Confidence Interval is **{outcomes[1]}** and 95% Prediction Interval is **{outcomes[2]}**.")
+               f"The 95% Confidence Interval is **[{outcomes[1]}, {outcomes[2]}]** and 95% Prediction Interval is "
+               f"**[{outcomes[3]}, {outcomes[4]}]**.")
 
 # Markdown
 st.subheader("The explanation of the predictor", divider="orange")
