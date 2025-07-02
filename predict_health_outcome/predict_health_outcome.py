@@ -6,7 +6,7 @@ import streamlit as st
 # Name the app
 st.header('Predicting the health consequences of HRH expansion under a limited budget in 2025-2034, Malawi')
 
-st.subheader("The input of the predictor", divider='rainbow')
+st.subheader("The input of extra budget allocation", divider='rainbow')
 
 # Take inputs
 p_clinical = st.number_input(label='Enter the budget proportion for Clinical cadre (in %)',
@@ -86,8 +86,8 @@ elif setting == 'Maximal health system function':
     outcomes = predict_with_ci(input=p, budget_growth_rate=0.042, setting='max_hs_func')
 
 # Check the predicting button and print outcomes
-st.subheader("The predicted outcome", divider='green')
-if st.button('Predict the health outcome'):
+st.subheader("The output of health outcome", divider='green')
+if st.button('Predict'):
     # print the health outcome
     st.success(f"The predicted DALYs is **{outcomes[0]}** million in the 10 year period of 2025-2034. "
                f"The 95% Confidence Interval is **[{outcomes[1]}, {outcomes[2]}]** and 95% Prediction Interval is "
