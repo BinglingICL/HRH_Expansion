@@ -103,7 +103,8 @@ multiple HCW cadres in the period between 2025 and 2034.
 Each HRH expansion strategy is determined by inputs of five percentage numbers for each of Clinical, DCSA, 
 Nursing and Midwifery, Pharmacy and Other cadres that sum up to 100%. Each number represents the proportion of the 
 limited additional budget that is allocated to each cadre for expansion each year. The health outcomes are measured 
-in Disability Adjusted Life Years (DALYs).
+in Disability Adjusted Life Years (DALYs). (The default proportions in this predictor represents the current HRH cost 
+distribution across cadres.)
 
 The prediction can be done in 5 settings:\\
     (1) main analysis - \\
