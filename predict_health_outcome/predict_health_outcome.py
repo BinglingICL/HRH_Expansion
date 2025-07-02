@@ -116,7 +116,7 @@ The prediction can be done in 5 settings:\\
     (4) sensitivity analysis with default consumable availability - \\
         annual budget growth rate = 4.2%, default consumable availability, default health system function,\\
     (5) sensitivity analysis with maximal health system function - \\
-        annual budget growth rate = 4.2%%, perfect consumable availability, maximal health system function.\\
+        annual budget growth rate = 4.2%%, perfect consumable availability, maximal health system function.
 
 By "perfect" or "default" consumable availability, we assume the consumables can always be provided upon request or 
 the availability is informed by available data. By "maximal" or "default" health system function, we assume perfect 
