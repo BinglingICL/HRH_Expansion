@@ -97,13 +97,13 @@ if st.button('Predict'):
 st.subheader("The explanation of the predictor", divider="orange")
 st.markdown(
     """
-This predictor outputs the estimated health outcome of any strategy that allocates a limited extra budget to expand
+This predictor outputs the estimated health outcome of any strategy that allocates a limited incremental budget to expand
 multiple HCW cadres in the period between 2025 and 2034.
 
 Each HRH expansion strategy is determined by inputs of five percentage numbers for each of Clinical, DCSA, 
 Nursing and Midwifery, Pharmacy and Other cadres that sum up to 100%. Each number represents the proportion of the 
-limited additional budget that is allocated to each cadre for expansion each year. The health outcomes are measured 
-in Disability Adjusted Life Years (DALYs). (The default proportions in this predictor represent the current HRH cost 
+limited incremental budget that is allocated to each cadre for expansion each year. The health outcomes are measured 
+in Disability Adjusted Life Years (DALYs). (The default proportions in this predictor represent the current HRH salary 
 distribution across cadres.)
 
 The prediction can be done in 5 settings:\\
