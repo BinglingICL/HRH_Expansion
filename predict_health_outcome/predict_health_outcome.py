@@ -6,7 +6,7 @@ import streamlit as st
 # Name the app
 st.header('Predicting the health consequences of HRH expansion under a limited budget in 2025-2034, Malawi')
 
-st.subheader("The input of extra budget allocation", divider='rainbow')
+st.subheader("Inputs of the incremental budget allocation", divider='rainbow')
 
 # Take inputs
 p_clinical = st.number_input(label='Enter the budget proportion for Clinical cadre (in %)',
